@@ -1,23 +1,70 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sug-theory"
-version = "2.0.0"
-description = "Sayan Universal Gradient (SUG) Theory -- a speculative framework coupling energy release, thermal gradients and cosmic distance."
+name = "sayan-gradient"
+version = "2.1.0"
+description = "Sayan Universal Gradient Theory -- Mathematical framework for universal thermal gradients and nuclear energy destruction limits featuring the Θ_s operator."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [{ name = "Sayan M." }]
-dependencies = ["numpy>=1.21"]
+keywords = [
+    "computational-physics",
+    "mathematical-modeling",
+    "gradient-theory",
+    "deep-space-analysis",
+    "thermal-gradients",
+    "theta-s-operator",
+    "nuclear-energy-limits",
+    "astrophysics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+]
 
 [project.optional-dependencies]
-plots = ["matplotlib>=3.5"]
-test = ["pytest>=7.0"]
+plots = [
+    "matplotlib>=3.5",
+    "plotly>=5.0",
+]
+notebooks = [
+    "nbformat>=5.0",
+]
+test = [
+    "pytest>=7.0",
+]
+all = [
+    "matplotlib>=3.5",
+    "plotly>=5.0",
+    "pytest>=7.0",
+    "nbformat>=5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory"
+Documentation = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory#readme"
+Zenodo = "https://doi.org/10.5281/ZENODO.22723906"
+Repository = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory"
 
 [tool.setuptools.packages.find]
-include = ["sug_theory*"]
+include = ["sayan_gradient*", "sug_theory*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
