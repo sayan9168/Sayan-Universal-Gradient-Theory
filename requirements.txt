@@ -1,3 +1,34 @@
+# ---------------------------------------------------------------------------
+# Sayan Universal Gradient (SUG) Theory -- dependencies
+#
+#   pip install -r requirements.txt     # everything (library + app + tests)
+#   pip install -e .                    # library only, from this clone (preferred)
+#   pip install -e ".[all]"             # library + plots + notebooks + tests
+#
+# !! READ THIS BEFORE RUNNING THE FIRST COMMAND !!
+# `sayan-gradient` is NOT on PyPI yet, so the last line below makes
+# `pip install -r requirements.txt` FAIL with "No matching distribution found"
+# until the package has been published (see PUBLISHING.md). Until then use:
+#
+#   pip install -r <(grep -v '^sayan-gradient' requirements.txt)
+#   pip install -e .
+#
+# or simply comment out the `sayan-gradient` line and run `pip install -e .`,
+# which installs this clone with the dependencies declared in pyproject.toml.
+# ---------------------------------------------------------------------------
+
+# --- core scientific stack (hard requirements of the package) ---------------
 numpy>=1.21
+scipy>=1.7
+
+# --- interactive Streamlit application (app.py) -----------------------------
+streamlit>=1.28
+plotly>=5.0
+
+# --- static figures, notebooks and test suite ------------------------------
 matplotlib>=3.5
 pytest>=7.0
+nbformat>=5.0
+
+# --- the package itself -----------------------------------------------------
+sayan-gradient>=2.1.0
