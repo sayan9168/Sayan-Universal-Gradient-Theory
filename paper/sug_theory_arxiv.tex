@@ -1,0 +1,912 @@
+% =====================================================================
+%  The Sayan Universal Gradient (SUG) Theory
+%  arXiv preprint -- physics.gen-ph
+%
+%  Compile with:  pdflatex sug_theory_arxiv.tex  (run twice)
+%  or:            latexmk -pdf sug_theory_arxiv.tex
+%
+%  Optional revtex4-2 (journal) alternative: replace the \documentclass
+%  and the geometry block below by
+%      \documentclass[aps,pre,reprint]{revtex4-2}
+%      \usepackage{amsmath,amssymb,amsthm,bm,booktabs,graphicx}
+%      \usepackage[usenaturelybrackets]{natbib}
+%  and drop the \maketitle block (revtex supplies its own).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---- encoding / fonts -------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% ---- page geometry ----------------------------------------------------
+\usepackage[a4paper,margin=1in]{geometry}
+
+% ---- mathematics ------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+
+% ---- tables and figures -----------------------------------------------
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../figures/}{figures/}{./}}
+
+% ---- links ------------------------------------------------------------
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+% ---------------------------------------------------------------------
+%  Notation shortcuts
+% ---------------------------------------------------------------------
+\newcommand{\thetaS}{\theta_{S}}
+\newcommand{\ThetaS}{\Theta_{S}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\tgrad}{\tau}
+\newcommand{\logint}{\operatorname{li}}
+\newcommand{\Ei}{\operatorname{Ei}}
+\newcommand{\Euler}{\gamma_{\mathrm{E}}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% Framed call-outs (core LaTeX only -- no extra packages required)
+\newcommand{\statusnote}[1]{%
+  \begin{center}%
+  \fbox{\begin{minipage}{0.92\textwidth}\small #1\end{minipage}}%
+  \end{center}}
+
+\newcommand{\keyresult}[1]{%
+  \begin{center}%
+  \fbox{\begin{minipage}{0.92\textwidth}#1\end{minipage}}%
+  \end{center}}
+
+% \IfFileExists-guarded figure: compilation never fails on a missing file
+\newcommand{\sugfigure}[3]{%
+  \begin{figure}[tb]
+    \centering
+    \IfFileExists{#1}%
+      {\includegraphics[width=0.92\linewidth]{#1}}%
+      {\fbox{\parbox[c][3.5cm][c]{0.92\linewidth}{\centering
+          \textit{Figure file \code{#1} not found in the current path.%
+          See the Code Availability section.}}}}%
+    \caption{#3}
+    \label{fig:#2}
+  \end{figure}}
+
+% ---------------------------------------------------------------------
+\title{\bfseries The Sayan Universal Gradient (SUG) Theory:\\
+       A Proposed Framework Coupling Energy Release, Thermal Gradients
+       and Distance}
+\author{Sayan M.}
+\date{Preprint, version 2.1 (2026)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We introduce the \emph{Sayan Universal Gradient (SUG)} theory: an original
+and deliberately minimal proposal in which a single dimensionless scalar
+field, $\thetaS$, organises three observables of a high-energy source --- the
+released energy potential $E_{nb}$, the local thermal gradient $\Delta T$, and
+the radial distance $r$ from the source. All physical inputs are normalised
+against stated reference scales, giving dimensionless ratios $e$, $\tgrad$ and $x$,
+and the field then falls off only \emph{logarithmically} with distance,
+\begin{equation}
+  \thetaS(x) \;=\; K\,\frac{\sqrt{e}}{\tgrad\,\ln x},
+  \qquad
+  e=\frac{E_{nb}}{E_0},\quad \tgrad=\frac{\Delta T}{T_0},\quad
+  x=\frac{r}{r_0},\quad x>1 ,
+\end{equation}
+where $K$ is the single dimensionless calibration constant of the model. Five
+postulates anchor the framework (energy coupling, logarithmic decay,
+square-root energy response, thermal antagonism, and a material threshold
+separating bound matter from an information/energy degree of freedom). From
+these we derive closed-form expressions for the radial path-integrated
+(contour) field, for a vacuum destruction radius $R_d$, and for a breaking
+energy $E_c$, and we show that the framework is internally consistent under
+round-trip inversion. We then state six falsifiable predictions. The central
+one (P2) is a \emph{parameter-free} energy ratio,
+\begin{equation}
+  \frac{E_2}{E_1} = \left(\frac{\ln x_2}{\ln x_1}\right)^{\!2},
+\end{equation}
+which is independent of the calibration constant $K$, of the material
+threshold $\theta_c$ and of the choice of reference scales, and which is
+therefore the cleanest experimental handle on the theory. We further show
+that this parameter-freeness is a generic property of the framework rather
+than a peculiarity of the logarithmic ansatz, and we describe an explicit
+least-squares procedure for fixing $K$ from measured events. SUG is offered
+as a testable research programme awaiting its first confrontation with data,
+not as an established law of nature.
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+
+Classical treatments of high-energy events keep three ledgers largely apart:
+how much energy was released, what thermal gradient is felt at a given place,
+and at what distance observable effects persist. This separation is
+convenient, but it may be concealing a simpler underlying order. SUG asks a
+single deliberately unifying question:
+
+\begin{quote}
+\emph{Can one scalar field organise a source's released energy, the local
+thermal gradient, and the distance at which effects persist --- and if so,
+what geometric laws follow?}
+\end{quote}
+
+The framework proposed here answers affirmatively and works the consequences
+out in closed form. Its signature --- and its most aggressive, most testable
+assumption --- is \emph{logarithmic} decay with distance. A logarithm falls
+far more slowly than any power law, which makes the ansatz easy to falsify:
+if a measured energy-versus-range curve is not consistent with a purely
+logarithmic envelope, the framework is wrong in a way that cannot be
+attributed to a nuisance parameter.
+
+\statusnote{%
+\textbf{Status of this work.}
+SUG is an \emph{original, speculative proposal}. It has not been peer
+reviewed, has not been published in a refereed journal, and has not been
+validated against any experiment or observation. Until the free calibration
+constant $K$ is fitted to a real event, the theory predicts \emph{functional
+shapes and ratios}, not absolute numbers. Every limitation is catalogued in
+Sec.~\ref{sec:limitations} and in the accompanying open-questions document,
+and the code that implements the algebra is public so that the claims can be
+checked rather than taken on trust.}
+
+The remainder of this paper is organised as follows. Sec.~\ref{sec:framework}
+gives the postulates, the dimensionally honest formulation, the central
+operator, its radial gradient, its contour (path-integrated) form, and the
+threshold inversions. Sec.~\ref{sec:predictions} states the six falsifiable
+predictions, with particular emphasis on the parameter-free ratio P2.
+Sec.~\ref{sec:calibration} sets out the empirical calibration of $K$ and the
+statistical machinery required to test the framework. Sec.~\ref{sec:conclusion}
+concludes, and Sec.~\ref{sec:code} documents the accompanying software.
+
+% =====================================================================
+\section{The Sayan Universal Gradient framework}
+\label{sec:framework}
+
+\subsection{The five postulates}
+
+SUG is an axiomatic framework. It starts from five premises, stated so that
+each can be criticised and, where possible, attacked by data
+(Tab.~\ref{tab:postulates}).
+
+\begin{table}[tb]
+  \centering
+  \caption{The five SUG postulates. None of these is claimed to be derived
+  from an established theory; they are the axioms the framework adopts.}
+  \label{tab:postulates}
+  \begin{tabular}{@{}p{1.5cm}p{5.1cm}p{7.4cm}@{}}
+    \toprule
+    \textbf{Postulate} & \textbf{Statement} & \textbf{Consequence} \\
+    \midrule
+    P-I  & A single scalar field $\thetaS$ couples released energy, thermal
+           gradient and distance. &
+           Thermal, energetic and geometric information about an event is one
+           continuous object, not three independent lists. \\[2pt]
+    P-II & $\thetaS \propto 1/\ln x$: the field falls with the
+           \emph{logarithm} of the dimensionless distance. &
+           The predicted reach of a disturbance in vacuum is far longer than
+           an inverse-square model suggests. This is the theory's most
+           aggressive and most testable assumption. \\[2pt]
+    P-III & $\thetaS \propto \sqrt{E_{nb}}$: energy enters through its
+           square root. &
+           Compressive energy-to-field mapping; a mild saturation, so that
+           past a point extra energy buys little extra field. \\[2pt]
+    P-IV & $\thetaS \propto 1/\Delta T$: a larger thermal gradient
+           \emph{antagonises} the field. &
+           Cold points feel a stronger field than warm ones; the theory can
+           say \emph{where} along a temperature profile the effect is
+           strongest. \\[2pt]
+    P-V  & A material threshold $\theta_c$ separates bound matter from an
+           information/energy degree of freedom. &
+           With a threshold the framework describes \emph{events}, not merely
+           a field, and predicts a destruction radius and a breaking energy. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Postulates P-II, P-III and P-IV fix the functional dependence of the field,
+while P-I fixes what the field is a function of. Postulate P-V supplies the
+inversion that converts the field into observable geometry. Nothing further
+is assumed; every result below is derived from these five statements plus
+dimensional consistency.
+
+\subsection{Reference scales and dimensionless ratios}
+\label{sec:scales}
+
+A field that couples quantities with different physical dimensions cannot be
+dimensionally consistent unless its arguments are themselves dimensionless. We
+therefore declare three reference scales --- a reference energy $E_0$, a
+reference thermal gradient $T_0$ and a reference length $r_0$ --- which fix
+the units of the theory, and we work exclusively with the dimensionless
+ratios
+\begin{equation}
+  e \;=\; \frac{E_{nb}}{E_0}, \qquad
+  \tgrad \;=\; \frac{\Delta T}{T_0}, \qquad
+  x \;=\; \frac{r}{r_0}.
+  \label{eq:ratios}
+\end{equation}
+This is the standard non-dimensionalisation of the Buckingham $\pi$ family
+\cite{buckingham1915}: a problem with three dimensionful inputs and one
+dimensionless output admits a unique set of $\pi$-groups up to normalisation,
+and \code{(e, tr, x)} is such a choice. The reference scales are \emph{units},
+not physics; changing them changes $e$, $\tgrad$, $x$ simultaneously and leaves
+every prediction of the theory invariant (verified numerically in
+Sec.~\ref{sec:calibration}).
+
+The motivation for this step is not cosmetic. The naive dimensional reading
+\begin{equation}
+  \ThetaS = \frac{\sqrt{E_{nb}}}{\Delta T\,\log_{10} r}
+  \label{eq:naive}
+\end{equation}
+is ill-formed twice over: $\sqrt{\text{energy}}/\text{temperature}$ does not
+cancel, and the logarithm of a dimensionful length is formally undefined.
+Declaring reference scales repairs both defects. Equation~\eqref{eq:naive} is
+recovered as the special case $K=1$, $E_0=T_0=r_0=1$ with base-$10$
+logarithms; it is a convenient laboratory illustration of the framework, not
+a separate theory, and we retain it in the software only for historical
+reproducibility.
+
+\subsection{The central operator}
+\label{sec:operator}
+
+Postulates P-II, P-III and P-IV together with the requirement that
+$\thetaS$ be dimensionless select, up to a multiplicative constant, the form
+\begin{equation}
+  \boxed{\; \thetaS(x) \;=\; K\,\frac{\sqrt{e}}{\tgrad\,\ln x} , \qquad x > 1 \;}
+  \label{eq:theta}
+\end{equation}
+or, in terms of the physical inputs of Eq.~\eqref{eq:ratios},
+\begin{equation}
+  \thetaS(r) \;=\;
+  K\,\frac{\sqrt{E_{nb}/E_0}}
+  {\bigl(\Delta T/T_0\bigr)\,\ln\!\bigl(r/r_0\bigr)} .
+  \label{eq:theta_phys}
+\end{equation}
+Every quantity in Eq.~\eqref{eq:theta_phys} is a pure number, so the field is
+manifestly dimensionless. It is positive for $K>0$, $\sqrt{e}>0$, $\tgrad>0$ and
+$x>1$; we henceforth discuss its magnitude $\lvert\thetaS\rvert$.
+
+Two features deserve comment.
+
+\emph{Inner boundary.} The point $x=1$ (that is, $r=r_0$) is a genuine
+singularity, since $\ln 1 = 0$. We interpret it as the edge of the
+\emph{source core}: inside $r\le r_0$ the continuum field description is not
+defined, and the field description begins where the source ends. This is a
+statement about the limits of the model rather than a defect in it, but it
+does require a physical prescription for $r_0$ that we do not yet have
+(limit O3, Sec.~\ref{sec:limitations}).
+
+\emph{Slow fall-off.} Because $\ln x$ grows without bound, $\thetaS$ decays
+more slowly than any inverse power of distance. For example, doubling the
+field decay length from $x=10$ to $x=100$ changes the field by a factor of
+only $\ln 100/\ln 10 = 2$ at fixed $e$ and $\tgrad$. This is the origin of the
+"long reach" claims of the theory, and also of its tension with the
+inverse-square law (Sec.~\ref{sec:limitations}).
+
+\subsection{Radial gradient of the field}
+\label{sec:gradient}
+
+The local rate of decay of the field along the radial direction is
+\begin{equation}
+  \frac{\dd\thetaS}{\dd r}
+  \;=\; -\,\frac{K\sqrt{e}}{\tgrad\,r_0\,x\,\bigl(\ln x\bigr)^{2}}
+  \;=\; -\,\frac{\thetaS(r)}{r\,\ln\!\bigl(r/r_0\bigr)} ,
+  \label{eq:grad}
+\end{equation}
+with $x=r/r_0$. Equation~\eqref{eq:grad} makes the slow fall-off explicit:
+the gradient is suppressed by $\ln x$ relative to the field itself, and by a
+further factor $r$ from geometric spreading. A useful diagnostic is the local
+\emph{logarithmic} decay length
+\begin{equation}
+  \ell_{\ln}(r) \;\equiv\; -\,\frac{r}{\dd\ln\thetaS/\dd\ln r}
+  \;=\; r\,\ln x ,
+\end{equation}
+which diverges as $r\to\infty$: SUG contains no fixed length scale, and
+consequently no asymptotic regime in which the decay becomes
+approximate-power-law. This is a sharp qualitative difference from
+inverse-square spreading, and it is directly measurable in principle.
+
+\subsection{Contour (path-integrated) form}
+\label{sec:contour}
+
+A global version of the field is obtained by integrating the point field along
+a radial segment $[r_a, r_b]$ with $r_b > r_a > r_0$. Writing
+$r = r_0 x$, so that $\dd r = r_0\,\dd x$,
+\begin{equation}
+  \ThetaS(a\!\to\!b)
+  \;=\; \int_{r_a}^{r_b}\!
+  \frac{\sqrt{e}}{\tgrad\,\ln(r/r_0)}\,\dd r
+  \;=\; \frac{K\,r_0\,\sqrt{e}}{\tgrad}
+  \Bigl[\logint(x_b)-\logint(x_a)\Bigr],
+  \label{eq:contour}
+\end{equation}
+where the logarithmic integral is
+\begin{equation}
+  \logint(x) \;\equiv\; \int_0^{x}\frac{\dd t}{\ln t}
+  \;=\; \Ei(\ln x)
+  \;=\; \Euler + \ln\!\ln x
+     + \sum_{k=1}^{\infty}\frac{(\ln x)^{k}}{k\,k!},
+  \qquad x>1 .
+  \label{eq:li}
+\end{equation}
+Equation~\eqref{eq:li} is the classical logarithmic integral
+\cite{abramowitz1964}, implemented exactly via the exponential integral
+\code{expi} in the accompanying software.
+If path length is instead measured in dimensionless units
+($\dd\ell' = \dd x = \dd r/r_0$), the same result appears with the prefactor
+$K\sqrt{e}/\tgrad$ alone; the two conventions differ only by the fixed factor
+$r_0$, and the implementation reports the former.
+
+Two remarks. First, $\logint$ is monotonically increasing on $(1,\infty)$, so
+$\ThetaS(a\!\to\!b) > 0$ and grows with the path length: the contour constant
+is a positive, saturating measure of "field accumulated along a ray".
+Second, the closed form~\eqref{eq:contour} is exact; the software verifies it
+against adaptive quadrature to machine precision, which is a useful check
+that the algebra and the code agree.
+
+\subsection{Threshold inversion: geometry and energy}
+\label{sec:inversion}
+
+Postulate P-V supplies a material threshold $\theta_c > 0$. Inverting
+Eq.~\eqref{eq:theta} at fixed $e$ and $\tgrad$ fixes the geometry; inverting it
+at fixed $\tgrad$ and $x$ fixes the energy.
+
+\paragraph{Vacuum destruction radius.}
+Setting $\thetaS(x_c)=\theta_c$ gives
+\begin{equation}
+  \ln x_c = \frac{K\sqrt{e}}{\tgrad\,\theta_c}
+  \quad\Longrightarrow\quad
+  \boxed{\; x_c = \exp\!\left(\frac{K\sqrt{e}}{\tgrad\,\theta_c}\right),
+  \qquad R_d \equiv r_0\,x_c \;}
+  \label{eq:radius}
+\end{equation}
+where $R_d$ is the radius beyond which the source can no longer hold matter
+above its integrity threshold. Note the structure of Eq.~\eqref{eq:radius}:
+a logarithmically decaying field inverts to an \emph{exponentially} growing
+radius in $\sqrt{e}/(\tgrad\theta_c)$. This is the sharpest quantitative
+statement the theory makes, and the most exposed to falsification.
+
+\paragraph{Breaking energy.}
+Conversely, at fixed $\tgrad$ and $x$,
+\begin{equation}
+  e_c = \left(\frac{\tgrad\,\theta_c\,\ln x}{K}\right)^{\!2}
+  \quad\Longrightarrow\quad
+  \boxed{\; E_c \;=\; E_0
+    \left(\frac{\tgrad\,\theta_c\,\ln x}{K}\right)^{\!2} \;}
+  \label{eq:energy}
+\end{equation}
+the source energy required to carry a threshold to distance $r$. Since the
+required energy grows only quadratically in $\ln x$, extending an effect
+outward is predicted to be remarkably cheap; this is the quantitative content
+of the range-extension claim tested in Sec.~\ref{sec:predictions}.
+
+\paragraph{Thermal-profile inversion.}
+A third inversion is useful in the field: for a prescribed field value
+$\theta_\ast$ at radius $r$, the local thermal gradient must be
+\begin{equation}
+  \Delta T(r) \;=\; T_0\,\frac{K\sqrt{e}}{\theta_\ast\,\ln(r/r_0)} ,
+  \label{eq:thermalinv}
+\end{equation}
+i.e. the thermal gradient \emph{map} along a ray is fixed once the source
+energy is given. This is what allows the framework to make a statement about
+\emph{where} along a temperature profile a threshold is reached, and it is
+implemented by a Brent root-solver for the general case of an
+arbitrarily varying $\Delta T(r)$.
+
+\subsection{Consistency identities}
+\label{sec:consistency}
+
+Because the inversions above are algebraic rearrangements of
+Eq.~\eqref{eq:theta}, two round-trip identities must hold identically --- the
+field evaluated at its own critical radius, Eq.~\eqref{eq:rt1}, and the field
+produced by the breaking energy at the target distance,
+Eq.~\eqref{eq:rt2} --- and the test suite enforces both:
+\begin{align}
+  \thetaS\!\bigl(x_c\bigr) &= \theta_c ,
+  \label{eq:rt1}\\
+  \thetaS(e_c,\,x) &= \theta_c .
+  \label{eq:rt2}
+\end{align}
+These are not empirical statements; they are internal-consistency checks
+whose purpose is to certify that the software implements the mathematics
+faithfully. A failure of either would indicate an implementation error, not a
+failure of the theory.
+
+\subsection{Relation to established physics}
+\label{sec:context}
+
+SUG is not presented in a vacuum. Table~\ref{tab:anchors} lists the nearest
+classical anchor for each ingredient, together with the tension each
+creates. The last two rows are the ones a critic should focus on: the
+logarithmic ansatz conflicts with the well-established inverse-square spread of
+radiative flux, and the square-root energy response is asserted rather than
+derived. We prefer to state these plainly than to obscure them.
+
+\begin{table}[tb]
+  \centering
+  \caption{SUG elements, their classical anchors, and the resulting tension.
+  The anchors provide context for comparison; they do not constitute
+  validation of SUG.}
+  \label{tab:anchors}
+  \begin{tabular}{@{}p{3.9cm}p{4.0cm}p{6.7cm}@{}}
+    \toprule
+    \textbf{SUG element} & \textbf{Classical anchor} & \textbf{Relation / tension} \\
+    \midrule
+    Energy as a field driver
+      & Relativistic energy; radiation flux \cite{einstein1905}
+      & SUG uses $\sqrt{E}$ and a logarithmic envelope, not $E/r^{2}$. \\
+    Thermal antagonism
+      & Thermodynamics, heat transport \cite{clausius1865}
+      & The \emph{direction} of the coupling must be tested; standard cooling
+        laws do not obviously oppose a field. \\
+    Threshold and phase change
+      & Critical phenomena, phase transitions
+      & Postulate P-V is the phase-transition analogue; $\theta_c$ has no
+        microphysical formula. \\
+    Logarithmic decay
+      & Coulomb and gravitational log potentials in $2$D
+      & Must be reconciled with the $3$D inverse-square law, or reinterpreted
+        as acting on a derived rather than a raw observable. \\
+    Radial scaling
+      & Self-similar blast solutions \cite{sedov1959}
+      & Classical detonation scaling predicts power-law, not logarithmic,
+        range-extension. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Falsifiable predictions}
+\label{sec:predictions}
+
+A framework earns its keep only through the statements it dares to make and
+the routes by which it could be shown wrong. We list six, each phrased so that
+in principle an experiment or observation could confirm or reject it; they are
+summarised in Table~\ref{tab:predictions}. Until $K$ is calibrated,
+predictions P1, P3--P5 constrain \emph{shapes}; P2 is independent of $K$ and
+can be tested immediately.
+
+\subsection{P1 --- Shape of the reach law}
+
+\emph{Statement.} For fixed $\tgrad$ and $\theta_c$, the threshold distance obeys
+\begin{equation}
+  \ln R_d \;\propto\; \sqrt{E_{nb}} .
+  \label{eq:p1}
+\end{equation}
+Equivalently, $\ln R_d$ plotted against $\sqrt{E_{nb}}$ must be a straight
+line. A plot of $\ln R_d$ against $E_{nb}$ or against $\ln E_{nb}$ would
+\emph{not} be linear, so the distinction is visible without any fit quality
+argument: P1 admits a purely visual falsification.
+
+\subsection{P2 --- The parameter-free energy ratio (central result)}
+\label{sec:p2}
+
+This is the cleanest test the theory offers and the one we would run first.
+
+\emph{Statement.} At a fixed thermal gradient, moving a threshold from
+distance $x_1$ to $x_2$ costs released energy in the ratio
+\begin{equation}
+  \boxed{\; \frac{E_2}{E_1}
+  \;=\; \left(\frac{\ln x_2}{\ln x_1}\right)^{\!2} \;}
+  \label{eq:p2}
+\end{equation}
+and this ratio is \emph{independent of} $K$, of the material threshold
+$\theta_c$, of the reference scales $E_0,T_0,r_0$, and of the value of $\tgrad$
+itself (provided $\tgrad$ is common to the two events). To see the cancellations
+explicitly, apply Eq.~\eqref{eq:energy} to both events:
+\begin{equation}
+  \frac{E_2}{E_1}
+  = \frac{E_0\!\left(\dfrac{\tgrad\theta_c\ln x_2}{K}\right)^{\!2}}
+         {E_0\!\left(\dfrac{\tgrad\theta_c\ln x_1}{K}\right)^{\!2}}
+  = \left(\frac{\ln x_2}{\ln x_1}\right)^{\!2},
+  \label{eq:p2proof}
+\end{equation}
+in which $E_0$, $\tgrad$, $\theta_c$ and $K$ all cancel, as
+Eq.~\eqref{eq:p2proof} makes explicit. The prediction is thus a statement
+about the \emph{functional form} of the decay law alone, which is exactly why
+it can be tested before the theory has been calibrated.
+
+\keyresult{%
+\textbf{Why P2 is the decisive test.} Equation~\eqref{eq:p2} contains no free
+parameter of the model. It can therefore be used (i.\,e.) on a
+\emph{second} event, at a different range, without any fitting whatsoever.
+If a measured range extension demands a substantially larger energy
+multiplier than Eq.~\eqref{eq:p2} predicts, the logarithmic ansatz is
+falsified --- no choice of $K$, $\theta_c$ or of units can rescue it.}
+
+\paragraph{Illustration.} The cost of extending the threshold by one decade
+$x\mapsto 10x$ is
+\begin{equation}
+  \frac{E(10x)}{E(x)} = \left(1+\frac{\ln 10}{\ln x}\right)^{\!2},
+  \label{eq:decade}
+\end{equation}
+which falls as $x$ grows. Numerically,
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+  \toprule
+  Range extension $x_1\to x_2$ & $x_1\to x_2$ & Predicted $E_2/E_1$ \\
+  \midrule
+  One decade, early        & $10 \to 100$     & $4.00$ \\
+  One decade, later        & $100 \to 1000$   & $2.25$ \\
+  One decade, far          & $10^{3} \to 10^{4}$ & $1.78$ \\
+  Two decades              & $10^{2} \to 10^{6}$ & $9.00$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+The qualitative signature is that the energy cost of a fixed multiplicative
+range extension \emph{decreases} as the range grows, approaching
+Eq.~\eqref{eq:p2} with $E_2/E_1\to 1$ in the far field. A model whose reach
+is set by geometric spreading (an inverse-square law) instead demands a
+\emph{constant} factor per decade, $10^{2p}$ for a $1/r^{2p}$ law, which grows
+without bound as the range grows. The two behaviours are qualitatively
+distinct and therefore easy to separate observationally.
+
+\paragraph{A remark on genericity.} The parameter-freeness of P2 is not an
+accident of the logarithmic choice. Write the framework generically as
+\begin{equation}
+  \thetaS \;=\; \frac{K\,g(e)}{\tgrad\,f(x)},
+  \label{eq:generic}
+\end{equation}
+with $g(e)=\sqrt{e}$ from P-III. Since $\theta_c = K\sqrt{e}/(\tgrad f(x_c))$,
+the breaking energy at any distance is $E_c \propto \bigl[f(x)\bigr]^{2}$, and
+therefore
+\begin{equation}
+  \frac{E_2}{E_1} \;=\; \left[\frac{f(x_2)}{f(x_1)}\right]^{\!2},
+  \label{eq:genericratio}
+\end{equation}
+for \emph{any} monotone decay law $f$. Equation~\eqref{eq:genericratio} is the
+genuinely parameter-free core of the framework; SUG's specific and
+\emph{sharp} claim is that $f=\ln$, so that the right-hand side becomes
+Eq.~\eqref{eq:p2}. An experiment that measures $E_2/E_1$ at two or more
+separated ranges thereby measures $f$ itself, up to the unobservable
+normalisation of the reference length. This also shows how P2 discriminates
+against competing models: for an inverse-square law $f \propto x^{2}$ the
+measured ratio would be $(x_2/x_1)^{4}$, enormously larger than
+Eq.~\eqref{eq:p2} for the same ranges.
+
+\subsection{P3 --- Thermal antagonism}
+
+\emph{Statement.} For fixed source energy and distance,
+\begin{equation}
+  \thetaS \;\propto\; \frac{1}{\tgrad} .
+  \label{eq:p3}
+\end{equation}
+\emph{Test.} Hold the source fixed and raise the ambient thermal gradient; the
+observed disturbance strength at a fixed point should fall hyperbolically. A
+measurement that is flat in temperature, or that rises, rejects the coupling
+\emph{direction} of P-IV. Note that this prediction, unlike P2, requires
+knowledge of $\tgrad$ in absolute units and hence of $T_0$.
+
+\subsection{P4 --- Square-root saturation}
+
+\emph{Statement.} Doubling the released energy multiplies the field by
+exactly $\sqrt{2}$, and multiplies the destruction radius by
+\begin{equation}
+  \frac{R_d(2e)}{R_d(e)} = \exp\!\left[
+  \frac{K\sqrt{e}}{\tgrad\,\theta_c}\bigl(\sqrt{2}-1\bigr)\right] ,
+  \label{eq:p4}
+\end{equation}
+which is modest for moderate sources. Field-versus-energy data should
+therefore \emph{saturate}: a concave curve, not a straight line. This is a
+distinctive, purely qualitative signature and is the easiest of the six to
+test in principle, since it requires only the shape of a single curve.
+
+\subsection{P5 --- Vacuum/atmosphere asymmetry}
+
+\emph{Statement.} Because the SUG field decays only logarithmically, an
+attenuating medium (atmosphere, circumstellar envelope) that imposes an
+additional factor $\exp(-\mu x)$ on top of the field will suppress it far
+more severely than vacuum. The framework therefore predicts that a blast in
+deep vacuum affects a much larger volume than an identical blast in an
+atmosphere --- a statement with no free parameters in its limit and a
+single measurable attenuation length $\mu$ otherwise.
+
+\subsection{P6 --- One organising field, not many channels}
+
+\emph{Statement.} Thermal and mechanical signatures of a high-energy event
+should be spatially continuous and \emph{jointly} organised by a single
+functional form, with the thermal and mechanical channels correlated as
+Eq.~\eqref{eq:theta} requires, rather than described by independent radial
+profiles per channel. Falsified if the channels decorrelate, or if one of
+them is well described while the other is not.
+
+\subsection{Summary and falsification routes}
+
+\begin{table}[tb]
+  \centering
+  \caption{The six predictions, whether they are free of model parameters,
+  and the most direct route to falsifying each.}
+  \label{tab:predictions}
+  \begin{tabular}{@{}p{0.7cm}p{4.5cm}p{2.4cm}p{6.5cm}@{}}
+    \toprule
+    \textbf{\#} & \textbf{Prediction} & \textbf{Parameter-free?} &
+    \textbf{Most direct falsification} \\
+    \midrule
+    P1 & $\ln R_d \propto \sqrt{E}$ linear (Eq.~\eqref{eq:p1}) & no &
+        plot $\ln R_d$ vs.\ $\sqrt{E}$; curvature kills it \\
+    P2 & $E_2/E_1 = (\ln x_2/\ln x_1)^2$ (Eq.~\eqref{eq:p2}) & \textbf{yes} &
+        a much larger energy multiplier is required for the same range \\
+    P3 & $\thetaS \propto 1/\tgrad$ (Eq.~\eqref{eq:p3}) & no &
+        raise ambient temperature; a flat field rejects it \\
+    P4 & field saturates with $E$ (Eq.~\eqref{eq:p4}) & no &
+        field-vs-energy curve must be concave, not linear \\
+    P5 & larger influence in vacuum & no &
+        compare vacuum and atmospheric events at equal $E$ \\
+    P6 & one organising field & yes (in form) &
+        thermal and mechanical channels decorrelate \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Empirical calibration}
+\label{sec:calibration}
+
+\subsection{What is free, and what is a unit}
+
+The framework has exactly one physically free parameter, the dimensionless
+calibration constant $K$. The three reference scales $E_0$, $T_0$, $r_0$ are
+choices of unit, not content: replacing them rescales $e$, $\tgrad$, $x$
+simultaneously and leaves Eq.~\eqref{eq:theta_phys} invariant. We therefore
+have one number to fix, and the rest of the theory is testable once it is.
+
+\subsection{One anchor event suffices}
+
+From any single event for which the source energy, the local thermal gradient
+and an observed threshold radius are known, $K$ follows in closed form by
+inverting Eq.~\eqref{eq:radius}:
+\begin{equation}
+  \widehat{K}
+  \;=\; \frac{\tgrad\,\theta_c\,\ln\!\bigl(R_d/r_0\bigr)}{\sqrt{e}}
+  \;=\; \frac{\theta_{\rm obs}\,\tgrad\,\ln x_{\rm obs}}{\sqrt{e}} .
+  \label{eq:Kanchor}
+\end{equation}
+The second form applies when the field itself, rather than a material
+threshold, is observed. Choosing one well-characterised high-energy event and
+applying Eq.~\eqref{eq:Kanchor} removes the only free constant; it does not
+confer any validity, and it is a one-parameter fit, so it cannot itself test
+the framework.
+
+\subsection{Many events: weighted least squares}
+
+With $N$ events carrying measured field values
+$\theta_i \pm \sigma_{\theta,i}$, define the model predictor
+\begin{equation}
+  p_i \;=\; \frac{\sqrt{e_i}}{\tgrad_i\,\ln x_i} .
+  \label{eq:predictor}
+\end{equation}
+The model is then linear in $K$, $\theta_i = K\,p_i$, and the
+weighted-least-squares estimator has the closed form
+\begin{equation}
+  \widehat{K} \;=\; \frac{\sum_i w_i p_i\theta_i}{\sum_i w_i p_i^{2}} ,
+  \qquad
+  \widehat{\sigma}_K = \left(\sum_i w_i p_i^{2}\right)^{-1/2},
+  \qquad w_i = \sigma_{\theta,i}^{-2} .
+  \label{eq:wls}
+\end{equation}
+Equations~\eqref{eq:predictor}--\eqref{eq:wls} are the estimator implemented
+in the released package (with a non-negativity constraint $K\ge0$ and
+covariance propagation from the nonlinear least-squares routine). Because the
+model is linear in its only free parameter, no local minima exist and the fit
+is unconditionally stable; the associated $\chi^{2}$,
+\begin{equation}
+  \chi^{2}(K) = \sum_i w_i\bigl(\theta_i - Kp_i\bigr)^{2},
+  \qquad \chi^{2}_{\min} = \chi^{2}(\widehat{K}),
+\end{equation}
+with $N-1$ degrees of freedom, is the natural goodness-of-fit statistic once
+$K$ has been absorbed. A correct model should give
+$\chi^{2}_{\min}\approx N-1$; a systematically larger value is the
+statistical signature of the wrong functional form, and is the quantitative
+counterpart of the visual tests in P1 and P4.
+
+\subsection{The two-step protocol}
+
+We recommend a protocol that never uses $K$ to fit and $K$ to test at the same
+time.
+\begin{enumerate}
+  \item \textbf{Anchor.} Choose one well-measured high-energy event, fix
+        $E_0,T_0,r_0$ to convenient units, and solve Eq.~\eqref{eq:Kanchor}
+        for $K$.
+  \item \textbf{Parameter-free check.} Take a \emph{second} event at a
+        different range and test Eq.~\eqref{eq:p2}. No fitted quantity enters
+        this test. This is the step that can kill the theory.
+  \item \textbf{Shape checks.} Over a decade of energies, test the linearity
+        of $\ln R_d$ against $\sqrt{E}$ (P1) and the concavity of the
+        field-versus-energy curve (P4).
+  \item \textbf{Thermal check.} Sweep ambient temperature at fixed geometry
+        and test $\thetaS\propto1/\tgrad$ (P3).
+  \item \textbf{Publish the negative results.} A failed prediction is as
+        informative as a successful one, and reporting it is what makes the
+        framework a research programme rather than a claim.
+\end{enumerate}
+
+\subsection{What happens if P4 fails}
+
+If the measured energy response is found to be $\propto E^{\alpha}$ with
+$\alpha\neq 1/2$, the repair is transparent and worth stating in advance. Let
+us generalise P-III to $\thetaS \propto e^{\alpha/2}$. Then, from
+Eq.~\eqref{eq:alphagen},
+\begin{equation}
+  x_c = \exp\!\left(\frac{K\,e^{\alpha/2}}{\tgrad\,\theta_c}\right),
+  \qquad
+  E_c = E_0\left(\frac{\tgrad\,\theta_c\,\ln x}{K\,e^{\alpha/2}}\right)^{\!2},
+  \label{eq:alphagen}
+\end{equation}
+and the parameter-free ratio of Eq.~\eqref{eq:p2} generalises to
+\begin{equation}
+  \frac{E_2}{E_1} = \left(\frac{\ln x_2}{\ln x_1}\right)^{\frac{2}{1+\alpha}} .
+  \label{eq:alphap2}
+\end{equation}
+Two things follow. First, the parameter-freeness survives: Eq.~\eqref{eq:alphap2}
+still contains neither $K$ nor $\theta_c$, so the discriminating experiment
+of Sec.~\ref{sec:p2} remains available with $\alpha$ unknown. Second, the
+exponent is measurable --- a multi-decade range-extension experiment measures
+$\alpha$ directly. We regard the square-root response as a conjecture to be
+measured, not a derived result, and Eq.~\eqref{eq:alphap2} is the
+corresponding fallback. A related caveat applies to the threshold
+$\theta_c$, for which no microphysical formula is offered: the framework
+currently requires $\theta_c$ to be supplied as a material input.
+
+\subsection{Status of the calibration to date}
+
+No empirical calibration has been performed. In the released software $K$ is
+set to unity and all reference scales to unity, which is a transparent
+placeholder rather than a measurement; the figures in this paper are
+illustrations of the model, not images of nature. Fig.~\ref{fig:field_decay}
+shows the predicted slow fall-off, Fig.~\ref{fig:thermalmap} the
+thermal--distance trade-off, Fig.~\ref{fig:radius} the exponential growth of
+the destruction radius with $\sqrt{e}$ that embodies P1, and
+Fig.~\ref{fig:breaking} the gentle quadratic-in-$\ln x$ growth of the
+breaking energy that underlies P2. They are included so that a reader can see
+the shapes the theory predicts; they carry no evidential weight.
+
+\sugfigure{fig_field_decay.png}{field_decay}{Predicted field magnitude
+$\lvert\thetaS\rvert$ against dimensionless distance $x=r/r_0$ at fixed
+$\tgrad=1$, for several source energies $e$. The square-root energy response
+(P-III) is visible in the unequal vertical spacing of the curves, and the
+slow, long-reach logarithmic fall-off (P-II) in the flattening of every
+curve. \emph{Illustration of the model, not a measurement.}}
+
+\sugfigure{fig_thermal_energy_map.png}{thermalmap}{The thermal--distance
+trade-off: contours of constant $\lvert\thetaS\rvert$ in the $(x,\tgrad)$ plane
+at fixed $e$, i.e.\ the map implied by Eq.~\eqref{eq:thermalinv}. Moving closer
+in $x$ can compensate for a larger thermal gradient, which is the
+two-dimensional content of P-III and P-IV combined.
+\emph{Illustration of the model, not a measurement.}}
+
+\sugfigure{fig_vacuum_destruction_radius.png}{radius}{Predicted vacuum
+destruction radius $R_d/r_0$ against dimensionless source energy $e$ on
+logarithmic axes, for several thresholds $\theta_c$. Exponential growth of
+reach with $\sqrt{e}$ is the embodiment of P1; note that a plot against
+$\sqrt{e}$ on linear axes is a straight line, whereas the axes shown here are
+equivalent up to the reparametrisation $e\to\sqrt{e}$.
+\emph{Illustration of the model, not a measurement.}}
+
+\sugfigure{fig_breaking_energy.png}{breaking}{Predicted breaking energy
+$E_c/E_0$ against dimensionless distance $x$ on logarithmic axes, for several
+thresholds. The gentle growth --- quadratic in $\ln x$ --- is the cheap-range
+signature quantified by P2 in Eq.~\eqref{eq:p2}.
+\emph{Illustration of the model, not a measurement.}}
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+SUG has been presented as a disciplined proposal: five explicit axioms, a
+dimensionally honest central operator, a closed-form contour integral,
+closed-form threshold inversions, and --- most importantly --- a set of
+predictions each of which is paired with the route by which it could be
+shown wrong. Its single most testable statement, the parameter-free energy
+ratio of Eq.~\eqref{eq:p2}, requires no fitted parameter and can be applied
+to a second event immediately.
+
+Whether the framework survives contact with data is an open empirical
+question, and the answer is not currently known. What this paper attempts to
+establish is not that SUG is right, but that it is stated precisely enough
+that the question can be settled decisively rather than argued about.
+
+\subsection{Limitations and the validation agenda}
+\label{sec:limitations}
+
+We list the limitations explicitly, in the order in which they would have to
+be addressed.
+
+\begin{enumerate}
+  \item \textbf{No calibration.} $K$ is free until fitted to a real anchor
+        event. Only shapes and ratios are currently predictive; no absolute
+        radius or energy is claimed.
+  \item \textbf{Tension with the inverse-square law.} Postulate P-II, the
+        central and most aggressive assumption, is in direct conceptual
+        tension with the $1/r^{2}$ spread of radiative flux in three
+        dimensions. It is not yet clear whether the SUG field is a rival
+        description, a re-scaled effective quantity, or a bookkeeping
+        device for an underlying derivation. This is the single most
+        important open problem.
+  \item \textbf{Source-core singularity.} The divergence at $x=1$ requires a
+        physical prescription for $r_0$ and a cut-off or regularity
+        condition. The interpretation as the edge of the source core is an
+        assumption.
+  \item \textbf{Square-root response asserted.} $\thetaS\propto\sqrt{E}$ is
+        postulated, not derived. Section~\ref{sec:calibration} gives the
+        $\alpha$-generalisation and shows that the key test survives it.
+  \item \textbf{Material threshold.} $\theta_c$ has no microphysical
+        formula and must be supplied per material or regime.
+  \item \textbf{No data.} No experiment or validated simulation currently
+        tests SUG. Every figure in this paper illustrates the model only.
+\end{enumerate}
+
+The honest summary is that SUG is a self-consistent axiomatic proposal that
+has not yet confronted data. Its value at this stage is that it is cheap to
+falsify: one calibration anchor plus one parameter-free cross-check would
+either earn the framework a place or retire it.
+
+% =====================================================================
+\section*{Code Availability}
+\label{sec:code}
+
+All equations, operators, inversions, least-squares calibration and figures in
+this paper are implemented in a released, tested, open-source Python package
+\cite{sug2026}.
+
+\begin{itemize}
+  \item \textbf{Source repository (version control, issues, full derivation
+        notes):}
+        \url{https://github.com/sayan9168/Sayan-Universal-Gradient-Theory}
+  \item \textbf{Archived, citable snapshot (Zenodo):}
+        \url{https://doi.org/10.5281/zenodo.22723906}
+        \quad (DOI \code{10.5281/zenodo.22723906})
+  \item \textbf{PyPI package:} \code{pip install sayan-gradient}
+        (MIT licence; Python $\ge 3.9$; requires \code{numpy} and
+        \code{scipy}).
+  \item \textbf{Interactive application:} a Streamlit web application
+        (\code{streamlit run app.py}) exposes the $\Theta_S$ operator, the
+        vacuum destruction radius, the energy breaking threshold, the $3$-D
+        field surface and the P2 parameter-free ratio calculator.
+\end{itemize}
+
+The implementation is a direct transcription of the algebra in
+Sec.~\ref{sec:framework}. The round-trip identities of
+Sec.~\ref{sec:consistency}, the closed form of Eq.~\eqref{eq:contour} against
+adaptive quadrature, and the parameter-free ratio of Eq.~\eqref{eq:p2} are all
+asserted in an automated test suite, so that a reader can confirm that the
+code and the printed equations agree. Reproducing the figures requires only
+\code{python -m sug\_theory.plots --outdir figures} followed by
+\code{pytest}.
+
+% =====================================================================
+\begin{thebibliography}{9}
+
+\bibitem{buckingham1915}
+E.~Buckingham, ``On the scaling of the equations of physics,''
+\emph{Philosophical Magazine} \textbf{29}, 174 (1915).
+
+\bibitem{clausius1865}
+R.~Clausius, ``\"Uber die bewegende Kraft der W\"arme,''
+\emph{Annalen der Physik} \textbf{126}, 353 (1865).
+
+\bibitem{einstein1905}
+A.~Einstein, ``Zur Elektrodynamik bewegter K\"orper,''
+\emph{Annalen der Physik} \textbf{322}, 891 (1905).
+
+\bibitem{sedov1959}
+L.~I.~Sedov, \emph{Similarity and Dimensional Methods in Mechanics}
+(Wiley, New York, 1959).
+
+\bibitem{abramowitz1964}
+M.~Abramowitz and I.~A.~Stegun (eds.),
+\emph{Handbook of Mathematical Functions} (National Bureau of Standards,
+Washington, 1964), Sec.~5.1 for the logarithmic integral $\Ei(\ln x)$.
+
+\bibitem{sug2026}
+S.~M., \emph{The Sayan Universal Gradient (SUG) Theory: A Proposed Framework
+Coupling Energy Release, Thermal Gradients and Cosmic Distance}, GitHub
+repository \code{sayan9168/Sayan-Universal-Gradient-Theory}, preprint version
+2.1 (2026), \url{https://doi.org/10.5281/zenodo.22723906}.
+SUG is an original proposal by the author; the works cited above provide
+context and comparison only, and do not constitute endorsement or validation.
+
+\end{thebibliography}
+
+\end{document}
