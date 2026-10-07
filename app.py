@@ -332,7 +332,7 @@ st.title("Sayan Universal Gradient (SUG) Theory -- interactive explorer")
 st.caption(
     "A proposed, unvalidated framework. Outputs are model values, not measurements. "
     "Repository: github.com/sayan9168/Sayan-Universal-Gradient-Theory  |  "
-    "DOI: 10.5281/zenodo.22723906  |  `pip install sayan-gradient`"
+    "DOI: 10.5281/zenodo.22723745  |  `pip install sayan-gradient`"
 )
 st.info(
     "**K has not been calibrated to data.** Until one anchor event fixes K, SUG "
@@ -744,7 +744,7 @@ e=\\frac{E_{nb}}{E_0},\\; \\tau=\\frac{\\Delta T}{T_0},\\; x=\\frac{r}{r_0}$$
 #### Code availability
 
 * Repository -- <https://github.com/sayan9168/Sayan-Universal-Gradient-Theory>
-* Archived snapshot (Zenodo) -- <https://doi.org/10.5281/zenodo.22723906>
+* Archived snapshot (Zenodo) -- <https://doi.org/10.5281/zenodo.22723745>
 * PyPI -- `pip install sayan-gradient` (MIT licence, Python >= 3.9)
 * Paper source -- `paper/sug_theory_arxiv.tex` (arXiv physics.gen-ph)
 

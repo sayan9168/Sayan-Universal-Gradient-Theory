@@ -2,13 +2,13 @@
 
 [![PyPI version](https://img.shields.io/badge/pypi-v2.1.0-blue.svg)](https://pypi.org/project/sayan-gradient/)
 [![Python versions](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://pypi.org/project/sayan-gradient/)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2FZENODO.22723906-blue.svg)](https://doi.org/10.5281/ZENODO.22723906)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2FZENODO.22723745-blue.svg)](https://doi.org/10.5281/ZENODO.22723745)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-49%20passed-brightgreen.svg)]()
 
 > **Production-ready Python package for computational physics, mathematical modeling of universal thermal gradients, nuclear energy destruction limits, and deep space analysis featuring the $\Theta_s$ (Theta-s) operator.**
 
-Published on Zenodo: **[DOI: 10.5281/ZENODO.22723906](https://doi.org/10.5281/ZENODO.22723906)**  
+Published on Zenodo: **[DOI: 10.5281/ZENODO.22723745](https://doi.org/10.5281/ZENODO.22723745)**  
 GitHub: [sayan9168/Sayan-Universal-Gradient-Theory](https://github.com/sayan9168/Sayan-Universal-Gradient-Theory)
 
 ---
@@ -294,8 +294,8 @@ If you use `sayan-gradient` or the Sayan Universal Gradient Theory in your resea
   title        = {The Sayan Universal Gradient (SUG) Theory: A Proposed Mathematical Framework Coupling Energy Release, Thermal Gradients and Cosmic Distance},
   year         = {2026},
   publisher    = {Zenodo},
-  doi          = {10.5281/ZENODO.22723906},
-  url          = {https://doi.org/10.5281/ZENODO.22723906}
+  doi          = {10.5281/ZENODO.22723745},
+  url          = {https://doi.org/10.5281/ZENODO.22723745}
 }
 ```
 
