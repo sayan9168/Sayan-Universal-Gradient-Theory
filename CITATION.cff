@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or its accompanying theory materials, please cite this work."
+title: "Sayan Universal Gradient Theory"
+authors:
+  - name: Sayan M.
+version: "2.1.0"
+doi: 10.5281/zenodo.22723745
+license: MIT
+repository-code: "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory"
+url: "https://doi.org/10.5281/zenodo.22723745"
+abstract: >-
+  Sayan Universal Gradient Theory (SUG) is a proposed mathematical framework
+  and Python implementation for a dimensionless scalar field coupling source
+  energy, a thermal gradient, and distance. The framework is speculative and
+  has not been empirically validated; its numerical outputs are model
+  calculations, not established physical measurements.
+keywords:
+  - computational physics
+  - mathematical modeling
+  - thermal gradients
+  - theoretical physics
