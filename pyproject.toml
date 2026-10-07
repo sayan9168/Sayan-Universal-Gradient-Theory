@@ -48,6 +48,8 @@ notebooks = [
 ]
 test = [
     "pytest>=7.0",
+    "matplotlib>=3.5",
+    "plotly>=5.0",
 ]
 all = [
     "matplotlib>=3.5",
