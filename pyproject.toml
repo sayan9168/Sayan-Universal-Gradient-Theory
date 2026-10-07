@@ -59,7 +59,7 @@ all = [
 [project.urls]
 Homepage = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory"
 Documentation = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory#readme"
-Zenodo = "https://doi.org/10.5281/ZENODO.22723906"
+Zenodo = "https://doi.org/10.5281/ZENODO.22723745"
 Repository = "https://github.com/sayan9168/Sayan-Universal-Gradient-Theory"
 
 [tool.setuptools.packages.find]

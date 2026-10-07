@@ -4,7 +4,7 @@ A mathematical framework for mapping universal thermal gradients and nuclear
 energy destruction limits, featuring the :math:`\\Theta_S` (Theta-s) operator for
 deep space analysis.
 
-Published on Zenodo (DOI: 10.5281/ZENODO.22723906).
+Published on Zenodo (DOI: 10.5281/ZENODO.22723745).
 
 Key Modules:
 - :mod:`sayan_gradient.core`: ReferenceScales, non-dimensionalization, presets.
@@ -59,7 +59,7 @@ from .visualization import (
 
 __version__ = "2.1.0"
 __author__ = "Sayan M."
-__doi__ = "10.5281/ZENODO.22723906"
+__doi__ = "10.5281/ZENODO.22723745"
 
 __all__ = [
     # Core

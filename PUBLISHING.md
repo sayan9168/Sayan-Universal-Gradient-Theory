@@ -351,7 +351,7 @@ Then create a **new** Zenodo release from the tag in
 <https://zenodo.org/account/>, and update `__doi__` in
 `sayan_gradient/__init__.py` plus the DOI in `pyproject.toml` if Zenodo mints a
 new concept DOI. The versioned record
-(<https://doi.org/10.5281/zenodo.22723906>) stays valid regardless.
+(<https://doi.org/10.5281/zenodo.22723745>) stays valid regardless.
 
 ---
 
